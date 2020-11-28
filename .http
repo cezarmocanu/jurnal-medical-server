@@ -1,0 +1,10 @@
+GET http://localhost:8080/article/
+
+###
+
+POST http://localhost:8080/article/
+Content-Type: application/json
+
+{
+    "title": "Torticolis"
+}
