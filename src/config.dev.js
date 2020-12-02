@@ -4,7 +4,7 @@ const createConfig = ({port, sync, database, username, password} = {}) => {
     }
         
     return {
-        port: port || 8080,
+        port: port || 8080, 
         sync: sync || false,
         database,
         username,
@@ -13,7 +13,7 @@ const createConfig = ({port, sync, database, username, password} = {}) => {
 };
 
 const config = createConfig({
-    sync:false,
+    sync: false,
     database: 'jurnalmedical',
     username: 'adminjurnalmedical',
     password: 'password@JurnalMedical'
