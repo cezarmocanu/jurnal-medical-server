@@ -8,3 +8,18 @@ Content-Type: application/json
 {
     "title": "Torticolis"
 }
+
+###
+GET http://localhost:8080/edition/
+
+###
+POST http://localhost:8080/edition/
+Content-Type: application/json
+
+{
+    "title": "Mare titlu"
+}
+
+
+###
+DELETE http://localhost:8080/edition/2
