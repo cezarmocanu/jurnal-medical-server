@@ -1,3 +1,18 @@
+GET http://localhost:8080/author/
+###
+
+GET http://localhost:8080/author/1/articles
+###
+
+POST http://localhost:8080/author/
+Content-Type: application/json
+
+{
+    "firstName": "Jan Clan",
+    "lastName": "Baran"
+}
+###
+
 GET http://localhost:8080/article/
 
 ###
@@ -7,6 +22,21 @@ Content-Type: application/json
 
 {
     "title": "Torticolis"
+}
+
+
+###
+POST http://localhost:8080/article/hasAuthor
+Content-Type: application/json
+
+{
+    "author": {
+        "firstName": "Jan Clan",
+        "lastName": "Baran"
+    },
+    "article": {
+        "title": "Baraneaua rotofeie"
+    }
 }
 
 ###
