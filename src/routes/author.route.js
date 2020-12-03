@@ -6,6 +6,27 @@ router.get('/', async (req, res) => {
     return res.json(authors);
 });
 
+router.get('/:id/articles', async (req, res) => {
+    const {id} = req.params;
+    const author = await models.author.findOne({
+        where:{id},
+        include: models.article
+    });
+
+    //TODO: Add lodash typechecking
+    if (author === undefined || author.firstName === undefined) {
+        return res.json([]);
+    }
+    
+    const articles = await author.getArticles();
+
+    if (articles.length <= 0) {
+        return res.json([]);
+    }
+
+    return res.json(articles);
+});
+
 router.post('/', async (req, res) => {
     const {firstName, lastName} = req.body;
 

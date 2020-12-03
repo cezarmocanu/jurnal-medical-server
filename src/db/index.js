@@ -1,25 +1,22 @@
 const {DataTypes} = require('sequelize');
 const connection = require('./connection');
 
-const createArticleModel = require('./article.db');
-const createEditionModel = require('./edition.db');
-const createAuthorModel = require('./author.db');
+const article = require('./article.db')(connection,DataTypes);
+const edition = require('./edition.db')(connection,DataTypes);
+const author = require('./author.db')(connection,DataTypes);
 
-createArticleModel(connection, DataTypes);
-createEditionModel(connection, DataTypes);
-createAuthorModel(connection, DataTypes);
+const models = {
+    article,
+    edition,
+    author
+};
 
-
-connection.models.edition.hasMany(connection.models.article);
-connection.models.article.belongsTo(connection.models.edition,{
-    foreignKey: "editionId"
+Object.values(models).map(model => {
+    model.associate(models);
 });
-connection.models.author.hasMany(connection.models.article);
-connection.models.article.belongsTo(connection.models.author,{
-    foreignKey: "authorId"
-});
+
 
 module.exports = {
     connection, 
-    models: connection.models
+    models
 };
