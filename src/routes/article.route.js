@@ -1,28 +1,28 @@
-const _ = require('lodash');
-const router = require('express').Router();
-const {like: LIKE} = require('sequelize').Op;
-const {models} = require('../db');
+const _ = require("lodash");
+const router = require("express").Router();
+const {like: LIKE} = require("sequelize").Op;
+const {models} = require("../db");
 
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
     const articles = await models.article.findAll();
 
-    if (!_.isArray(articles) || !_.isEmpty(articles)) {
+    if (!_.isArray(articles) || _.isEmpty(articles)) {
         return res.json({articles:[]})
     }
         
     return res.json({articles});
 });
 
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
     const {title} = req.body;
 
     await models.article.create({title});
 
-    return res.send('article created');
+    return res.send("article created");
 });
 
 
-router.post('/hasAuthor', async (req, res) => {
+router.post("/hasAuthor", async (req, res) => {
     const {firstName, lastName} = req.body.author;
     const {title} = req.body.article;
 
