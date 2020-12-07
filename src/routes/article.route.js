@@ -1,10 +1,16 @@
+const _ = require('lodash');
 const router = require('express').Router();
 const {like: LIKE} = require('sequelize').Op;
 const {models} = require('../db');
 
 router.get('/', async (req, res) => {
     const articles = await models.article.findAll();
-    return res.json(articles);
+
+    if (!_.isArray(articles) || !_.isEmpty(articles)) {
+        return res.json({articles:[]})
+    }
+        
+    return res.json({articles});
 });
 
 router.post('/', async (req, res) => {
