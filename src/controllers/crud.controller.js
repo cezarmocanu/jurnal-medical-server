@@ -1,5 +1,5 @@
-const {GET_ALL,GET_ONE_BY_ID, CREATE_ONE} = require("../constants").OP_PATHS;
-const _ = require("lodash");
+const {GET_ALL,GET_ONE_BY_ID, CREATE_ONE} = require('../constants').OP_PATHS;
+const _ = require('lodash');
 
 //TODO Add datamodel as a parameter tocheck if posted data is corect
 const withCrud = (router, repo) => {
@@ -19,7 +19,7 @@ const withCrud = (router, repo) => {
     //TODO: Add error message to response body
     router.get(GET_ONE_BY_ID, async (req,res) => {
 
-        const body = _.get(req, "body", null);
+        const body = _.get(req, 'body', null);
 
         if (_.isNil(body) || _.isEmpty(body)){
             return res.json({data: {}})
@@ -41,7 +41,7 @@ const withCrud = (router, repo) => {
     });
 
     router.post(CREATE_ONE, async (req,res) => {
-        const body = _.get(req, "body", null);
+        const body = _.get(req, 'body', null);
 
         if (_.isNil(body) || _.isEmpty(body)){
             return res.json({data: {}})
