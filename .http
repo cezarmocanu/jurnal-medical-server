@@ -43,6 +43,9 @@ Content-Type: application/json
 GET http://localhost:8080/edition/all
 
 ###
+GET http://localhost:8080/edition/one/1
+
+###
 POST http://localhost:8080/edition/create/one
 Content-Type: application/json
 
@@ -50,3 +53,18 @@ Content-Type: application/json
     "title": "Mare titlu complet"
 }
 
+
+###
+GET http://localhost:8080/collection/all
+
+
+###
+GET http://localhost:8080/collection/one/2
+
+###
+POST http://localhost:8080/collection/create/one
+Content-Type: application/json
+
+{
+    "title": "Titlu Colectie"
+}
