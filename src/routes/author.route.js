@@ -1,10 +1,7 @@
 const router = require('express').Router();
+const { withCrud } = require('../controllers/crud.controller');
 const {models} = require('../db');
 
-router.get('/', async (req, res) => {
-    const authors = await models.author.findAll();
-    return res.json(authors);
-});
 
 router.get('/:id/articles', async (req, res) => {
     const {id} = req.params;
@@ -27,12 +24,6 @@ router.get('/:id/articles', async (req, res) => {
     return res.json(articles);
 });
 
-router.post('/', async (req, res) => {
-    const {firstName, lastName} = req.body;
-
-    await models.author.create({firstName, lastName});
-
-    return res.send('author created');
-});
+withCrud(router,models.author);
 
 module.exports = router;
