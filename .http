@@ -1,10 +1,10 @@
-GET http://localhost:8080/author/
+GET http://localhost:8080/author/all
 ###
 
 GET http://localhost:8080/author/1/articles
 ###
 
-POST http://localhost:8080/author/
+POST http://localhost:8080/author/create/one
 Content-Type: application/json
 
 {
@@ -13,11 +13,11 @@ Content-Type: application/json
 }
 ###
 
-GET http://localhost:8080/article/
+GET http://localhost:8080/article/all
 
 ###
 
-POST http://localhost:8080/article/
+POST http://localhost:8080/article/create/one
 Content-Type: application/json
 
 {
@@ -59,7 +59,7 @@ GET http://localhost:8080/collection/all
 
 
 ###
-GET http://localhost:8080/collection/one/2
+GET http://localhost:8080/collection/one/1
 
 ###
 POST http://localhost:8080/collection/create/one

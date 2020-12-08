@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const _ = require('lodash');
 const router = require('express').Router();
 const {like: LIKE} = require('sequelize').Op;
@@ -21,6 +22,14 @@ router.post('/', async (req, res) => {
     return res.send('article created');
 });
 
+=======
+const _ = require("lodash");
+const { withCrud } = require("../controllers/crud.controller");
+const router = require("express").Router();
+const {like: LIKE} = require("sequelize").Op;
+const {models} = require("../db");
+
+>>>>>>> 97b802ed75590eb897a98cc926b9f7f26eb1bcfe
 
 router.post('/hasAuthor', async (req, res) => {
     const {firstName, lastName} = req.body.author;
@@ -48,5 +57,7 @@ router.post('/hasAuthor', async (req, res) => {
 
     return res.json(article);
 });
+
+withCrud(router,models.article);
 
 module.exports = router;
