@@ -1,6 +1,6 @@
 module.exports = (connection, types) => {
   const collection = connection.define(
-    "collection",
+    'collection',
     {
       title: {
         type: types.STRING(128),
