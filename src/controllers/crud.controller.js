@@ -24,10 +24,7 @@ const withCrud = (router, repo) => {
     //TODO: Add send status 
     //TODO: Add error message to response body
     router.get(GET_ONE_BY_ID, async (req,res) => {
-
-<<<<<<< HEAD
-=======
->>>>>>> 37a091ccc6bce0a1c1bd9507056361e709282e5f
+        
         const body = _.get(req, 'body', null);
 
         if (_.isNil(body) || _.isEmpty(body)){
