@@ -4,7 +4,6 @@ const router = require('express').Router();
 const {like: LIKE} = require('sequelize').Op;
 const {models} = require('../db');
 
-
 router.post('/hasAuthor', async (req, res) => {
     try {
         const {firstName, lastName} = req.body.author;

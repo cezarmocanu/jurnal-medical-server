@@ -1,5 +1,7 @@
+const {createField, TYPES} = require('./utils/createField');
+
 const keyword = ({word} = {}) => ({
-    word: word || 'Keyword word'
+    word: createField(TYPES.STRING, word, "Default Word")
 });
 
 module.exports = keyword;
