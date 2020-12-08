@@ -26,14 +26,6 @@ const withCrud = (router, repo) => {
     router.get(GET_ONE_BY_ID, async (req,res) => {
         
         try {
-           /* const body = _.get(req, 'params', null);
-            console.log(body);
-
-            if (_.isNil(body) || _.isEmpty(body)){
-                console.log('body nul sau empty! ');
-                return res.json({data: {}})
-            }*/
-
             const {id} = _.get(req, 'params', null);
            
             if (_.isNaN(id)){
