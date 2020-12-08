@@ -1,4 +1,4 @@
-const {GET_ALL,GET_ONE_BY_ID, CREATE_ONE} = require('../constants').OP_PATHS;
+const {GET_ALL,GET_ONE_BY_ID, CREATE_ONE, UPDATE} = require('../constants').OP_PATHS;
 const _ = require('lodash');
 
 //TODO Add datamodel as a parameter tocheck if posted data is corect
@@ -21,6 +21,42 @@ const withCrud = (router, repo) => {
         }
     });
 
+    router.put(UPDATE, async (req,res) =>{
+
+        const params = _.get(req, 'params', null);
+        const body = _.get(req, 'body', null);
+
+        if (_.isNil(params) || _.isEmpty(params)){
+            return res.json({data: {}})
+        }
+
+        if (_.isNil(body) || _.isEmpty(body)){
+            return res.json({data: {}})
+        }
+
+        const {id} = params;
+
+        if (_.isNaN(id)){
+            return res.json({data: {}})
+        }
+
+        try {
+            const entity= await repo.findByPk(id);
+
+            if (_.isNil(entity)) {
+                return res.json({data: {}})
+            }
+
+            const newEntity = await repo.update({...body}, {where:{id}});
+
+            return res.json({data: newEntity});
+
+        } catch (error) {
+            return res.json({data:[error]});
+        }
+
+    });
+
     //TODO: Add send status 
     //TODO: Add error message to response body
     router.get(GET_ONE_BY_ID, async (req,res) => {
@@ -29,7 +65,6 @@ const withCrud = (router, repo) => {
             const {id} = _.get(req, 'params', null);
            
             if (_.isNaN(id)){
-                console.log('id e nul!');
                 return res.json({data: {}})
             }
 
