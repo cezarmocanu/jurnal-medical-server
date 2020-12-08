@@ -25,21 +25,16 @@ const withCrud = (router, repo) => {
     //TODO: Add error message to response body
     router.get(GET_ONE_BY_ID, async (req,res) => {
         
-        const body = _.get(req, 'body', null);
-
-        if (_.isNil(body) || _.isEmpty(body)){
-            return res.json({data: {}})
-        }
-
-        const {id} = body;
-
-        if (_.isNaN(id)){
-            return res.json({data: {}})
-        }
         try {
-            
-            const entity = await repo.findBtPk(id);   
-            
+            const {id} = _.get(req, 'params', null);
+           
+            if (_.isNaN(id)){
+                console.log('id e nul!');
+                return res.json({data: {}})
+            }
+
+            const entity = await repo.findByPk(id);   
+
             if (_.isNil(entity)) {
                 return res.json({data: {}})
             }

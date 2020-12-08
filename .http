@@ -59,7 +59,7 @@ GET http://localhost:8080/collection/all
 
 
 ###
-GET http://localhost:8080/collection/one/1
+GET http://localhost:8080/collection/one/2
 
 ###
 POST http://localhost:8080/collection/create/one
