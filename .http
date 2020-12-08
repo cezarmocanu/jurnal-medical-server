@@ -16,6 +16,8 @@ Content-Type: application/json
 GET http://localhost:8080/article/all
 
 ###
+GET http://localhost:8080/article/
+###
 
 POST http://localhost:8080/article/create/one
 Content-Type: application/json
