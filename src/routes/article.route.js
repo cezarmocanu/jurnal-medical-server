@@ -3,6 +3,7 @@ const { withCrud } = require('../controllers/crud.controller');
 const router = require('express').Router();
 const {like: LIKE} = require('sequelize').Op;
 const {models} = require('../db');
+const article = require('../model/article.model');
 
 router.post('/hasAuthor', async (req, res) => {
     try {
@@ -36,6 +37,6 @@ router.post('/hasAuthor', async (req, res) => {
     }
 });
 
-withCrud(router,models.article);
+withCrud(router,models.article,article);
 
 module.exports = router;
