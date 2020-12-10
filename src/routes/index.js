@@ -3,6 +3,7 @@ const editionRouter = require('./edition.route');
 const authorRouter = require('./author.route');
 const keywordRouter = require('./keyword.route');
 const collectionRouter = require('./collection.route');
+const userRouter = require('./user.route');
 
 module.exports = (app) => {
   app.use('/article', articleRouter);
@@ -10,4 +11,5 @@ module.exports = (app) => {
   app.use('/author', authorRouter);
   app.use('/keyword', keywordRouter);
   app.use('/collection', collectionRouter);
+  app.use('/user', userRouter);
 };
