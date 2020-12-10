@@ -104,15 +104,17 @@ POST http://localhost:8080/user/login
 Content-Type: application/json
 
 {
-    "email": "email@yahoo.com",
-    "password":"123abc"
+    "email": "fabi@yahoo.com",
+    "password":"test"
 }
+
+###
 POST http://localhost:8080/user/signUp
 Content-Type:  application/json
 
 {
-    "email": "teodor2@yahoo.com",
-    "password": "1234abc"
+    "email": "fabi@yahoo.com",
+    "password": "test"
 }
 
 ###

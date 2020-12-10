@@ -4,6 +4,9 @@ const {withCrud} = require('../controllers/crud.controller');
 const user = require('../model/user.model');
 const _ = require('lodash');
 const {like: LIKE} = require('sequelize').Op;
+const bcrypt = require('bcrypt');
+
+const saltRounds = 10;
 
 router.post('/login' , async(req,res)=> {
 
@@ -29,27 +32,38 @@ router.post('/login' , async(req,res)=> {
             where:{
                 email:{
                     [LIKE]: email
-                },
-                password: {
-                    [LIKE]: password
                 }
             }
         }
     );
-   
+
     if(_.isNil(existingUser)){
         return res.json({
             data:{
-                message:`email/password incorrect or does not exist`
+                message:`Email/Password incorrect or does not exist`
             }
         });
     }
 
-    return res.json({
-        data:{
-            message: `Login successful for user: ${email}`
-        }
-    });
+    try {
+        
+       if(await bcrypt.compare(body.password, existingUser.password)) {
+            return res.json({
+                data:{
+                    message: `Login successful for user: ${email}`
+                }
+            });
+       } else {
+            return res.json({
+                data:{  
+                    message:`Password is incorrect for user: ${email}`
+                }
+            });
+       }
+
+    } catch (error) {
+        return res.json({data:{error}});
+    }
 
 });
 
@@ -63,8 +77,11 @@ router.post('/signUp', async (req,res)=> {
             return res.json({data: {}});
         }
 
-        const newUser = user(body);
+        const hashedPassword = await bcrypt.hash(body.password, 10);
+
+        const newUser = user({email: body.email, password: hashedPassword});
         const {email} = newUser;
+
         const existingUser = await models.user.findOne({where:{
             email:{
             [LIKE]: email
@@ -75,6 +92,14 @@ router.post('/signUp', async (req,res)=> {
         return res.json({
             data:{  
                 message:`${email} already exists! Choose another one!`
+            }
+        });
+        };
+
+        if(_.isEmpty(body.password)){
+            return res.json({
+            data:{
+                message:"Password can't be null"
             }
         });
         };
