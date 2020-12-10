@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { withCrud } = require('../controllers/crud.controller');
 const {models} = require('../db');
-
+const author = require('../model/author.model');
 
 router.get('/:id/articles', async (req, res) => {
     try {
@@ -29,6 +29,7 @@ router.get('/:id/articles', async (req, res) => {
     }
 });
 
-withCrud(router,models.author);
+withCrud(router,models.author,author);
+
 
 module.exports = router;

@@ -23,7 +23,7 @@ POST http://localhost:8080/article/create/one
 Content-Type: application/json
 
 {
-    "title": "Torticolis"
+    "title": "Torticolis",
 }
 
 
@@ -52,7 +52,8 @@ POST http://localhost:8080/edition/create/one
 Content-Type: application/json
 
 {
-    "title": "Mare titlu complet"
+    "title": "Mare titlu complet",
+    "ocean": "MARE GRESEALA INTENTIOANTA"
 }
 
 
@@ -68,5 +69,6 @@ POST http://localhost:8080/collection/create/one
 Content-Type: application/json
 
 {
-    "title": "Titlu Colectie"
+    "title": "Titlu Colectie",
+    "greseluta":"Mistake"
 }

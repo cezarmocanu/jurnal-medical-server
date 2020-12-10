@@ -1,15 +1,16 @@
 const {GET_ALL,GET_ONE_BY_ID, CREATE_ONE, UPDATE, DELETE} = require('../constants').OP_PATHS;
 const _ = require('lodash');
+const { model } = require('../db/connection');
 
 //TODO Add datamodel as a parameter tocheck if posted data is corect
-const withCrud = (router, repo) => {
+const withCrud = (router, repo, dataModel) => {
     //TODO: Add send status 
     //TODO: Add error message to response body
     router.get(GET_ALL, async (req,res) => {
         try {
     
             const entities = await repo.findAll();
-            
+        
             if (!_.isArray(entities) || _.isEmpty(entities)) {
                 return res.json({data: []})
             }
@@ -51,9 +52,10 @@ const withCrud = (router, repo) => {
         if (_.isNil(body) || _.isEmpty(body)){
             return res.json({data: {}})
         }
-
-        //TODO typecheck based on datamodel
-        const newEntity = { ...body };
+        
+        //typecheck
+        const newEntity = dataModel(body);
+        
         try {
 
             await repo.create(newEntity);
