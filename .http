@@ -16,12 +16,14 @@ Content-Type: application/json
 GET http://localhost:8080/article/all
 
 ###
+GET http://localhost:8080/article/
+###
 
 POST http://localhost:8080/article/create/one
 Content-Type: application/json
 
 {
-    "title": "Torticolis"
+    "title": "Torticolis",
 }
 
 
@@ -50,7 +52,8 @@ POST http://localhost:8080/edition/create/one
 Content-Type: application/json
 
 {
-    "title": "Mare titlu complet"
+    "title": "Mare titlu complet",
+    "ocean": "MARE GRESEALA INTENTIOANTA"
 }
 
 
@@ -59,12 +62,35 @@ GET http://localhost:8080/collection/all
 
 
 ###
-GET http://localhost:8080/collection/one/1
+GET http://localhost:8080/collection/one/2
 
 ###
 POST http://localhost:8080/collection/create/one
 Content-Type: application/json
 
 {
-    "title": "Titlu Colectie"
+    "title": "Titlu Colectie",
+    "greseluta":"Mistake"
+}
+
+###
+GET http://localhost:8080/user/all
+
+
+###
+POST http://localhost:8080/user/create/one
+Content-Type: application/json
+
+{
+    "email": "email@yahoo.com",
+    "password":"123abc"
+}
+
+###
+POST http://localhost:8080/user/login
+Content-Type: application/json
+
+{
+    "email": "email@yahoo.com",
+    "password":"123abc"
 }
