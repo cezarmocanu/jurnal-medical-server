@@ -11,5 +11,5 @@ module.exports = (app) => {
   app.use('/author', authorRouter);
   app.use('/keyword', keywordRouter);
   app.use('/collection', collectionRouter);
-  app.use('/user',userRouter);
+  app.use('/user', userRouter);
 };
