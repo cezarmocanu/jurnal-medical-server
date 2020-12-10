@@ -72,3 +72,12 @@ Content-Type: application/json
     "title": "Titlu Colectie",
     "greseluta":"Mistake"
 }
+
+###
+PUT http://localhost:8080/collection/update/5
+Content-Type: application/json
+
+{
+    "title": "Titlul Colectie",
+    "test": "Hai ca merge daca e"
+}
