@@ -1,6 +1,5 @@
 const {GET_ALL,GET_ONE_BY_ID, CREATE_ONE, UPDATE, DELETE} = require('../constants').OP_PATHS;
 const _ = require('lodash');
-const { model } = require('../db/connection');
 
 //TODO Add datamodel as a parameter tocheck if posted data is corect
 const withCrud = (router, repo, dataModel) => {
@@ -10,7 +9,7 @@ const withCrud = (router, repo, dataModel) => {
         try {
     
             const entities = await repo.findAll();
-        
+            
             if (!_.isArray(entities) || _.isEmpty(entities)) {
                 return res.json({data: []})
             }
@@ -52,10 +51,10 @@ const withCrud = (router, repo, dataModel) => {
         if (_.isNil(body) || _.isEmpty(body)){
             return res.json({data: {}})
         }
-        
-        //typecheck
+
+        //TODO typecheck based on datamodel
         const newEntity = dataModel(body);
-        
+
         try {
 
             await repo.create(newEntity);
@@ -86,6 +85,8 @@ const withCrud = (router, repo, dataModel) => {
             return res.json({data: {}})
         }
 
+        const newEntityChecker = dataModel(body);
+
         try {
             const entity= await repo.findByPk(id);
 
@@ -93,7 +94,7 @@ const withCrud = (router, repo, dataModel) => {
                 return res.json({data: {}})
             }
 
-            const newEntity = await repo.update({...body}, {where:{id}});
+            const newEntity = await repo.update(newEntityChecker, {where:{id}});
 
             return res.json({data: newEntity});
 
