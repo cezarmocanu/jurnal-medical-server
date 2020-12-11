@@ -1,9 +1,10 @@
-const {GET_ALL,GET_ONE_BY_ID, CREATE_ONE, UPDATE, DELETE} = require('../constants').OP_PATHS;
+const {OP_PATHS} = require('../constants');
+const {GET_ALL,GET_ONE_BY_ID, CREATE_ONE, UPDATE, DELETE} = OP_PATHS;
+const {response} = require('./utils.controller');
 const _ = require('lodash');
 
 //TODO Add datamodel as a parameter tocheck if posted data is corect
 const withCrud = (router, repo, dataModel) => {
-    //TODO: Add send status 
     //TODO: Add error message to response body
     router.get(GET_ALL, async (req,res) => {
         try {
@@ -11,13 +12,13 @@ const withCrud = (router, repo, dataModel) => {
             const entities = await repo.findAll();
             
             if (!_.isArray(entities) || _.isEmpty(entities)) {
-                return res.json({data: []})
+                return response(res).notFound([]);
             }
             
-            return res.json({data:entities});
+            return response(res).ok(entities);
         
         } catch (error) {
-           return res.json({data: [error]});
+            return response(res).internalServerError({error})
         }
     });
 
@@ -29,19 +30,19 @@ const withCrud = (router, repo, dataModel) => {
             const {id} = _.get(req, 'params', null);
            
             if (_.isNaN(id)){
-                return res.json({data: {}})
+                return response(res).badRequest();
             }
 
             const entity = await repo.findByPk(id);   
 
             if (_.isNil(entity)) {
-                return res.json({data: {}})
+                return response(res).notFound();
             }
 
-            return res.json(entity);
+            return response(res).ok(entity);
         
         } catch (error) {
-            return res.json({data:[error]});
+            return response(res).internalServerError({error})
         }
     });
 
@@ -49,20 +50,18 @@ const withCrud = (router, repo, dataModel) => {
         const body = _.get(req, 'body', null);
 
         if (_.isNil(body) || _.isEmpty(body)){
-            return res.json({data: {}})
+            return response(res).badRequest();
         }
 
-        //TODO typecheck based on datamodel
         const newEntity = dataModel(body);
 
         try {
-
             await repo.create(newEntity);
 
-            return res.json({data: newEntity});    
+            return response(res).ok(newEntity);
 
         } catch (error) {
-            return res.json({data:[error]});
+            return response(res).internalServerError({error})
         }
     })
 
@@ -72,17 +71,17 @@ const withCrud = (router, repo, dataModel) => {
         const body = _.get(req, 'body', null);
 
         if (_.isNil(params) || _.isEmpty(params)){
-            return res.json({data: {}})
+            return response(res).badRequest();
         }
 
         if (_.isNil(body) || _.isEmpty(body)){
-            return res.json({data: {}})
+            return response(res).badRequest();
         }
 
         const {id} = params;
 
         if (_.isNaN(id)){
-            return res.json({data: {}})
+            return response(res).badRequest();
         }
 
         const newEntityChecker = dataModel(body);
@@ -91,15 +90,15 @@ const withCrud = (router, repo, dataModel) => {
             const entity= await repo.findByPk(id);
 
             if (_.isNil(entity)) {
-                return res.json({data: {}})
+                return response(res).notFound();
             }
 
             const newEntity = await repo.update(newEntityChecker, {where:{id}});
 
-            return res.json({data: newEntity});
+            return response(res).ok(newEntity);
 
         } catch (error) {
-            return res.json({data:[error]});
+            return response(res).internalServerError({error})
         }
 
     });
@@ -109,28 +108,28 @@ const withCrud = (router, repo, dataModel) => {
         const params = _.get(req, 'params', null);
 
         if (_.isNil(params) || _.isEmpty(params)){
-            return res.json({data: {}})
+            return response(res).badRequest();
         }
 
         const {id} = params;
 
         if (_.isNaN(id)){
-            return res.json({data: {}})
+            return response(res).badRequest();
         }
 
         try {
             const entity= await repo.findByPk(id);
 
             if (_.isNil(entity)) {
-                return res.json({data: {}})
+                return response(res).notFound();
             }
 
             const deletedEntity = await repo.destroy({where:{id}});
 
-            return res.json({data: deletedEntity});
+            return response(res).ok(deletedEntity);
 
         } catch (error) {
-            return res.json({data:[error]});
+            return response(res).internalServerError({error})
         }
 
     });

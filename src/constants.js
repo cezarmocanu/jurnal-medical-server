@@ -7,6 +7,17 @@ const OP_PATHS = {
     DELETE: '/delete/:id'
 };
 
+const RES_STATUS = {
+    OK:200,
+    BAD_REQUEST:400,
+    CONFLICT: 409,
+    FORBIDDEN:403,
+    NOT_FOUND: 404,
+    INTERNAL_SERVER_ERROR:500,
+    UNAUTHORIZED: 401
+};
+
 module.exports = {
-    OP_PATHS
+    OP_PATHS,
+    RES_STATUS
 }
