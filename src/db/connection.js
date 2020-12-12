@@ -1,14 +1,14 @@
 const {Sequelize} = require('sequelize');
-const {database, username, password} = require('../config.dev');
+const {production, host ,database, username, password} = require('../config.dev');
 
 
 const createConnection = () => {
-    if (process.env.HEROKU_POSTGRESQL_BRONZE_URL) {
-        new Sequelize(process.env.HEROKU_POSTGRESQL_BRONZE_URL, {
+    if (production) {
+        return new Sequelize(database, username, password, {
+            host,
             dialect: 'postgres',
             protocol: "postgres",   
-            port: 5432,
-            logging: true
+            port: 5432
         });
     }
 
