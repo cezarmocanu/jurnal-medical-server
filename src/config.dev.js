@@ -6,7 +6,7 @@ const createConfig = ({ port, sync, database, username, password } = {}) => {
   }
 
   return {
-    port: port || 8080,
+    port: process.env.PORT || port || 8080,
     sync: sync || false,
     database,
     username,
@@ -16,6 +16,7 @@ const createConfig = ({ port, sync, database, username, password } = {}) => {
 
 const config = createConfig({
   sync: false,
+  force: true,
   database: 'jurnalmedical',
   username: 'adminjurnalmedical',
   password: 'password@JurnalMedical',
