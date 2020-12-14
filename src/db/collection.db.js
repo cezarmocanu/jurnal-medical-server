@@ -10,7 +10,7 @@ module.exports = (connection, types) => {
   );
 
   collection.associate = (models) => {
-    collection.hasMany(models.article);
+    collection.hasMany(models.edition);
   };
 
   return collection;

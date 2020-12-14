@@ -11,21 +11,6 @@ Content-Type: application/json
     "firstName": "Jan Clan",
     "lastName": "Baran"
 }
-###
-
-GET http://localhost:8080/article/all
-
-###
-GET http://localhost:8080/article/
-###
-
-POST http://localhost:8080/article/create/one
-Content-Type: application/json
-
-{
-    "title": "Torticolis",
-}
-
 
 ###
 POST http://localhost:8080/article/hasAuthor
@@ -42,36 +27,10 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/edition/all
-
-###
 GET http://localhost:8080/edition/one/1
 
 ###
-POST http://localhost:8080/edition/create/one
-Content-Type: application/json
-
-{
-    "title": "Mare titlu complet",
-    "ocean": "MARE GRESEALA INTENTIOANTA"
-}
-
-
-###
-GET http://localhost:8080/collection/all
-
-
-###
 GET http://localhost:8080/collection/one/2
-
-###
-POST http://localhost:8080/collection/create/one
-Content-Type: application/json
-
-{
-    "title": "Titlu Colectie",
-    "greseluta":"Mistake"
-}
 
 ###
 
@@ -104,7 +63,7 @@ POST http://localhost:8080/user/login
 Content-Type: application/json
 
 {
-    "email": "fabi@yahoo.com",
+    "email": "fabi1@yahoo.com",
     "password":"test"
 }
 
@@ -113,7 +72,7 @@ POST http://localhost:8080/user/signUp
 Content-Type:  application/json
 
 {
-    "email": "fabi@yahoo.com",
+    "email": "fabi1@yahoo.com",
     "password": "test"
 }
 
@@ -126,3 +85,58 @@ Content-Type:  application/json
     "email": "email@yahoo.com",
     "password": "1234abc"
 }
+
+###
+GET http://localhost:8080/collection/all
+
+###
+POST http://localhost:8080/collection/create/one
+Content-Type: application/json
+
+{
+    "title": "Titlu Colectie",
+    "greseluta":"Mistake"
+}
+
+###
+
+GET http://localhost:8080/breadcrumb/collection/4
+
+###
+
+GET http://localhost:8080/breadcrumb/collections
+
+###
+
+GET http://localhost:8080/breadcrumb/edition/1
+
+###
+POST http://localhost:8080/edition/create/one
+Content-Type: application/json
+
+{
+    "title": "Mare titlu complet",
+    "ocean": "MARE GRESEALA INTENTIOANTA",
+    "collectionId": 1
+}
+
+###
+GET http://localhost:8080/edition/all
+
+###
+GET http://localhost:8080/article/all
+
+###
+GET http://localhost:8080/article/
+###
+
+POST http://localhost:8080/article/create/one
+Content-Type: application/json
+
+{
+    "title": "Torticolis",
+    "editionId": 1
+}
+
+###
+GET http://localhost:8080/breadcrumb/article/1

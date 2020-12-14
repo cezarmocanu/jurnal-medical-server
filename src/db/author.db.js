@@ -1,5 +1,3 @@
-const {MANY_TO_MANY_ASSOCIATIONS_TABLES} = require('./constants.db');
-
 module.exports = (connection, types) => {
     const author = connection.define('author',
     {
