@@ -3,10 +3,10 @@ const {response} = require('../controllers/utils.controller');
 const _ = require('lodash');
 const {models} = require('../db');
 const {BREADCRUMB_PATHS} = require('../constants');
-const collection = require('../model/collection.model');
-const {COLLECTION, EDITION, ARTICLE} = BREADCRUMB_PATHS;
 
-router.get(COLLECTION, async (req,res) => {
+
+
+router.get(BREADCRUMB_PATHS.COLLECTION, async (req,res) => {
     try {
 
         const {id} = _.get(req, 'params', null);
@@ -15,20 +15,20 @@ router.get(COLLECTION, async (req,res) => {
             return response(res).badRequest();
         }
 
-        const entity = await models.collection.findByPk(id);
+        const collection = await models.collection.findByPk(id);
 
-        if (_.isNil(entity)) {
+        if (_.isNil(collection)) {
             return response(res).notFound();
         }
 
-        return response(res).ok(entity);
+        return response(res).ok({collection});
     
     } catch (error) {
         return response(res).internalServerError({error})
     }
 });
 
-router.get(EDITION, async (req,res)=> {
+router.get(BREADCRUMB_PATHS.EDITION, async (req,res)=> {
     try {
 
         const {id} = _.get(req, 'params', null);
@@ -37,25 +37,29 @@ router.get(EDITION, async (req,res)=> {
             return response(res).badRequest();
         }
 
-        const entity = await models.edition.findOne({
+        const result = await models.edition.findOne({
             where:{id},
             include: models.collection
         });
 
-        if (_.isNil(entity)) {
+        if (_.isNil(result)) {
             return response(res).notFound();
         }
 
-        const finalEntity = [{id: entity.collection.id, title: entity.collection.title}, {id: entity.id, title: entity.title, collectionId: entity.collectionId}];
+        const edition = _.omit(result.dataValues, 'collection');
+        const collection = _.omit(result.collection.dataValues);
 
-        return response(res).ok(finalEntity);
+        return response(res).ok({
+            collection,
+            edition
+        });
 
     } catch (error) {
         return response(res).internalServerError({error})
     }
 });
 
-router.get(ARTICLE, async (req,res)=> {
+router.get(BREADCRUMB_PATHS.ARTICLE, async (req,res)=> {
     try {
 
         const {id} = _.get(req, 'params', null);
@@ -64,23 +68,29 @@ router.get(ARTICLE, async (req,res)=> {
             return response(res).badRequest();
         }
 
-        const entityArticle = await models.article.findOne({
+        const result = await models.article.findOne({
             where:{id},
-            include: models.edition
+            include: {
+                    model: models.edition,
+                    include: {
+                        model: models.collection
+                    }
+            }
         });
 
-        const entityEdition = await models.edition.findOne({
-            where: id == entityArticle.editionId,
-            include: models.collection
-        });
-
-        if (_.isNil(entityArticle)) {
+        if (_.isNil(result)) {
             return response(res).notFound();
         }
 
-       const finalEntity = [{id: entityEdition.collection.id, title: entityEdition.collection.title}, {id: entityEdition.id, title: entityEdition.title, collectionId: entityEdition.collectionId}, {id: entityArticle.id, title: entityArticle.title, editionId: entityArticle.editionId}];
+        const article = _.omit(result.dataValues, 'edition');
+        const edition = _.omit(result.edition.dataValues,'collection');
+        const collection = result.edition.collection.dataValues;
 
-        return response(res).ok(finalEntity);
+        return response(res).ok({
+            collection,
+            edition,
+            article
+        });
 
     } catch (error) {
         return response(res).internalServerError({error})
