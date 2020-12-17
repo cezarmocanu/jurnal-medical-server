@@ -26,7 +26,7 @@ const config = createConfig({
 });
 
 const production = createConfig({
-  sync:true,
+  sync:false,
   force:false,
   production:true,
   database:'d5m0jcs8m1ot73',
@@ -35,4 +35,4 @@ const production = createConfig({
   host:'ec2-54-84-98-18.compute-1.amazonaws.com'
 
 })
-module.exports = config;
+module.exports = production;
