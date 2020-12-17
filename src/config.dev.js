@@ -18,7 +18,8 @@ const createConfig = ({ port, production, force, host,sync, database, username, 
 };
 
 const config = createConfig({
-  sync: false,
+  sync: true,
+  force:false,
   database: 'jurnalmedical',
   username: 'adminjurnalmedical',
   password: 'password@JurnalMedical',
@@ -34,4 +35,4 @@ const production = createConfig({
   host:'ec2-54-84-98-18.compute-1.amazonaws.com'
 
 })
-module.exports = production;
+module.exports = config;
