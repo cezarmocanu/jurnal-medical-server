@@ -2,7 +2,7 @@ require('dotenv').config()
 const app = require('express')();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const {port, sync} = require('./config.dev');
+const {port, sync, force} = require('./config.dev');
 const {connection} = require('./db');
 const routes = require('./routes');
 
@@ -15,7 +15,7 @@ app.listen(port,async () => {
     try {
         await connection.authenticate();
         if (sync) {
-            await connection.sync({force:true})
+            await connection.sync({force})
         }
         console.log(`Listening on port ${port}`);
     }
