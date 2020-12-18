@@ -18,7 +18,7 @@ const createConfig = ({ port, production, force, host,sync, database, username, 
 };
 
 const config = createConfig({
-  sync: true,
+  sync: false,
   force:false,
   database: 'jurnalmedical',
   username: 'adminjurnalmedical',
