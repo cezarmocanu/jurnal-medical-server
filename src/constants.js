@@ -7,6 +7,12 @@ const OP_PATHS = {
     DELETE: '/delete/:id'
 };
 
+const BREADCRUMB_PATHS = {
+    COLLECTION: '/collection/:id',
+    EDITION: '/edition/:id',
+    ARTICLE: '/article/:id'
+ };
+
 const RES_STATUS = {
     OK:200,
     BAD_REQUEST:400,
@@ -19,5 +25,6 @@ const RES_STATUS = {
 
 module.exports = {
     OP_PATHS,
+    BREADCRUMB_PATHS,
     RES_STATUS
 }

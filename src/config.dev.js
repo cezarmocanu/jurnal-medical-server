@@ -1,4 +1,4 @@
-const createConfig = ({ port, production, force, host,sync, database, username, password } = {}) => {
+const createConfig = ({ port, sync, database, username, password } = {}) => {
   if (!database || !username || !password) {
     throw new Error(
       'CONFIG ERROR ---->\n *Database credidential are not defined corectly, please check config'
@@ -8,12 +8,9 @@ const createConfig = ({ port, production, force, host,sync, database, username, 
   return {
     port: process.env.PORT || port || 8080,
     sync: sync || false,
-    force: force || true,
     database,
     username,
     password,
-    production: production || false,
-    host:host || 'localhost'
   };
 };
 
@@ -26,7 +23,7 @@ const config = createConfig({
 });
 
 const production = createConfig({
-  sync:false,
+  sync:true,
   force:true,
   production:true,
   database:'d5m0jcs8m1ot73',

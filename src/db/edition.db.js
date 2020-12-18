@@ -10,6 +10,9 @@ module.exports = (connection, types) => {
     edition.associate = (models) => {
         //don't use destructuring here because we need to alter the references between the tables
         edition.hasMany(models.article);
+
+        edition.belongsTo(models.collection);
+
     }
 
     return edition;
