@@ -26,7 +26,7 @@ const config = createConfig({
 });
 
 const production = createConfig({
-  sync:true,
+  sync:false,
   force:true,
   production:true,
   database:'d5m0jcs8m1ot73',
