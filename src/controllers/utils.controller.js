@@ -7,7 +7,7 @@ const response = (res) => ({
     ok: (data={}) => res.status(OK).json({data}),
     forbidden:(data={}) => res.status(FORBIDDEN).json({data}),
     notFound: (data = {}) => res.status(NOT_FOUND).json({data}),
-    internalServerError: ({error = {},data = {}} = {}) => res.status(INTERNAL_SERVER_ERROR).json({data,error}),
+    internalServerError: ({error = {},data = {}} = {}) => res.status(INTERNAL_SERVER_ERROR).json({data,error:JSON.stringify(error)}),
     unauthorized: (data={}) => res.status(UNAUTHORIZED).json({data})
 });
 
