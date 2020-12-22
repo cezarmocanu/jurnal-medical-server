@@ -33,6 +33,6 @@ const production = createConfig({
   username:'wjfohyptxyemne',
   password:'df4083c61224745dee41a7f554b97b3e18f3acb72300c4d03aa88b1f2d36e1be',
   host:'ec2-54-84-98-18.compute-1.amazonaws.com'
+});
 
-})
-module.exports = production;
+module.exports = config;
