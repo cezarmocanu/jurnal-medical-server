@@ -35,4 +35,4 @@ const production = createConfig({
   host:'ec2-54-84-98-18.compute-1.amazonaws.com'
 });
 
-module.exports = config;
+module.exports = production;
