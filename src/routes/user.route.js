@@ -14,14 +14,12 @@ const accessTokenSecret = 'TokenSecret'
 
 const authenticateToken = (req,res,next)=>{
     const token = req.headers.authorization.split(' ')[1];
-    console.log(token);
     
     if(_.isNil(token)){
         return response(res).forbidden();
     }
 
    jwt.verify(token, accessTokenSecret, (err, user) =>{
-        console.log(err);
         
         if(err){
             return response(res).forbidden();
@@ -125,7 +123,8 @@ router.post('/signUp', async (req,res)=> {
         const token = generateAccessToken({user: email});
 
         return response(res).ok({
-            message: `Account is created! ${token}`
+            message: 'Account is created!', 
+            token
         });
 
     } catch (error) {
