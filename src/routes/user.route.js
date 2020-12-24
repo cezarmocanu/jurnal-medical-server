@@ -1,16 +1,40 @@
 const router = require('express').Router();
+const bcrypt = require('bcrypt');
+const _ = require('lodash');
+const {like: LIKE} = require('sequelize').Op;
+const jwt = require('jsonwebtoken');
+
 const {models} = require('../db');
 const {withCrud} = require('../controllers/crud.controller');
 const user = require('../model/user.model');
-const _ = require('lodash');
-const {like: LIKE} = require('sequelize').Op;
-const bcrypt = require('bcrypt');
 const {response} = require('../controllers/utils.controller');
 
 const saltRounds = 10;
+const accessTokenSecret = 'TokenSecret'
 
-router.post('/login' , async(req,res)=> {
+const authenticateToken = (req,res,next)=>{
+    const token = req.headers.authorization.split(' ')[1];
+    
+    if(_.isNil(token)){
+        return response(res).forbidden();
+    }
 
+   jwt.verify(token, accessTokenSecret, (err, user) =>{
+        
+        if(err){
+            return response(res).forbidden();
+        }
+
+        req.user = user;
+        next();
+    }); 
+};
+
+const generateAccessToken = (username)=>{
+    return jwt.sign(username, accessTokenSecret);
+};
+
+router.post('/login', authenticateToken, async(req,res)=> {
     const postBody = _.get(req, 'body', null);
     
     if(_.isNil(postBody) || _.isEmpty(postBody)){
@@ -65,6 +89,7 @@ router.post('/signUp', async (req,res)=> {
 
         const body = _.get(req, 'body', null);
         
+        
         if (_.isNil(body) || _.isEmpty(body)){
             return response(res).badRequest();
         }
@@ -95,9 +120,11 @@ router.post('/signUp', async (req,res)=> {
         };
 
         await models.user.create(newUser);
-        
+        const token = generateAccessToken({user: email});
+
         return response(res).ok({
-            message: `Account is created!`
+            message: 'Account is created!', 
+            token
         });
 
     } catch (error) {
